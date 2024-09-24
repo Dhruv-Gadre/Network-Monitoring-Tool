@@ -63,7 +63,6 @@ def get_network_interfaces():
             print(f"  Status: {'Up' if interfaces[interface].isup else 'Down'}, Speed: {interfaces[interface].speed} Mbps")
 
 
-
 # Ping test function to check network latency
 def ping_test(host="8.8.8.8"):
     print(f"Pinging {host}...")
@@ -109,50 +108,66 @@ def real_time_bandwidth(interval=1, duration=60):
     plt.ioff()  # Turn interactive mode off
     plt.show()
 
+# Function to ask the user if they want to continue
+def continue_prompt():
+    while True:
+        choice = input("Do you want to continue? (yes/no): ").strip().lower()
+        if choice == 'yes':
+            return True
+        elif choice == 'no':
+            return False
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
 # Main function for user interaction
 def main():
-    print("Network Monitoring Tool")
-    print("1. View Current Network Usage")
-    print("2. Test Network Speed")
-    print("3. Start Logging")
-    print("4. View Network Interfaces and IP Addresses")
-    print("5. Run Ping Test")
-    print("6. Real-time Bandwidth Usage Graph")
+    while True:
+        print("\nNetwork Monitoring Tool")
+        print("1. View Current Network Usage")
+        print("2. Test Network Speed")
+        print("3. Start Logging")
+        print("4. View Network Interfaces and IP Addresses")
+        print("5. Run Ping Test")
+        print("6. Real-time Bandwidth Usage Graph")
 
-    choice = input("Enter your choice: ")
+        choice = input("Enter your choice: ")
 
-    if choice == '1':
-        bytes_sent, bytes_recv = get_network_usage()
-        print(f"Bytes Sent: {bytes_sent}")
-        print(f"Bytes Received: {bytes_recv}")
+        if choice == '1':
+            bytes_sent, bytes_recv = get_network_usage()
+            print(f"Bytes Sent: {bytes_sent}")
+            print(f"Bytes Received: {bytes_recv}")
 
-    elif choice == '2':
-        download_speed, upload_speed = test_network_speed()
-        print(f"Download Speed: {download_speed:.2f} Mbps")
-        print(f"Upload Speed: {upload_speed:.2f} Mbps")
+        elif choice == '2':
+            download_speed, upload_speed = test_network_speed()
+            print(f"Download Speed: {download_speed:.2f} Mbps")
+            print(f"Upload Speed: {upload_speed:.2f} Mbps")
 
-    elif choice == '3':
-        log_network_data()
+        elif choice == '3':
+            log_network_data()
 
-    elif choice == '4':
-        get_network_interfaces()
+        elif choice == '4':
+            get_network_interfaces()
 
-    elif choice == '5':
-        host = input("Enter the host IP or domain (default: 8.8.8.8): ")
-        if not host:
-            host = "8.8.8.8"
-        ping_test(host)
+        elif choice == '5':
+            host = input("Enter the host IP or domain (default: 8.8.8.8): ")
+            if not host:
+                host = "8.8.8.8"
+            ping_test(host)
 
-    elif choice == '6':
-        duration = int(input("Enter the duration of real-time monitoring in seconds (default: 60): ") or 60)
-        real_time_bandwidth(duration=duration)
+        elif choice == '6':
+            duration = int(input("Enter the duration of real-time monitoring in seconds (default: 60): ") or 60)
+            real_time_bandwidth(duration=duration)
 
-    else:
-        print("Invalid choice")
+        else:
+            print("Invalid choice")
+
+        # Ask user if they want to continue
+        if not continue_prompt():
+            print("Exiting the program.")
+            break
 
     # Pause before exiting
     input("Press Enter to exit...")
 
 if __name__ == "__main__":
     main()
-
