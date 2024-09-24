@@ -150,5 +150,9 @@ def main():
     else:
         print("Invalid choice")
 
+    # Pause before exiting
+    input("Press Enter to exit...")
+
 if __name__ == "__main__":
     main()
+
