@@ -8,19 +8,18 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import subprocess
 
-# Function to get network usage (bytes sent/received)
 def get_network_usage():
     net_io = psutil.net_io_counters()
     bytes_sent = net_io.bytes_sent
     bytes_recv = net_io.bytes_recv
     return bytes_sent, bytes_recv
 
-# Function to test network speed using Speedtest
+# Function to test network speed using Speedtest library
 def test_network_speed():
     print("Testing network speed")
     try:
         st = speedtest.Speedtest()
-        st.get_best_server()  # Get the best server manually
+        st.get_best_server()  
         download_speed = st.download() / 1_000_000  # Convert to Mbps
         upload_speed = st.upload() / 1_000_000  # Convert to Mbps
         return download_speed, upload_speed
@@ -29,12 +28,11 @@ def test_network_speed():
         time.sleep(10)
         return test_network_speed()
 
-# Function to alert for high network usage
 def alert_high_usage(download_speed, upload_speed, threshold=100):
     if download_speed > threshold or upload_speed > threshold:
         print(f"Alert! High network usage detected. Download: {download_speed:.2f} Mbps, Upload: {upload_speed:.2f} Mbps")
 
-# Function to log network data
+# Function to log  the network data in a csv file
 def log_network_data(file_path='network_log.csv', interval=20):
     with open(file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
@@ -64,11 +62,11 @@ def get_network_interfaces():
 
 
 # Ping test function to check network latency
-def ping_test(host="8.8.8.8"):
+def ping_test(host="8.8.8.8"): #google 
     print(f"Pinging {host}...")
 
     # Cross-platform ping command
-    param = '-n' if os.name == 'nt' else '-c'  # Use '-n' for Windows and '-c' for Unix-based systems
+    param = '-n' if os.name == 'nt' else '-c'  
     command = ['ping', param, '1', host]
 
     try:
