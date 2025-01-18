@@ -14,7 +14,6 @@ def get_network_usage():
     bytes_recv = net_io.bytes_recv
     return bytes_sent, bytes_recv
 
-# Function to test network speed using Speedtest library
 def test_network_speed():
     print("Testing network speed")
     try:
@@ -32,7 +31,7 @@ def alert_high_usage(download_speed, upload_speed, threshold=100):
     if download_speed > threshold or upload_speed > threshold:
         print(f"Alert! High network usage detected. Download: {download_speed:.2f} Mbps, Upload: {upload_speed:.2f} Mbps")
 
-# Function to log  the network data in a csv file
+# Logging data to the csv files
 def log_network_data(file_path='network_log.csv', interval=20):
     with open(file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
@@ -48,7 +47,7 @@ def log_network_data(file_path='network_log.csv', interval=20):
             alert_high_usage(download_speed, upload_speed)
             time.sleep(interval)
 
-# Function to get network interfaces and IP addresses (IPv4/IPv6)
+# Get the network interfaces
 def get_network_interfaces():
     addrs = psutil.net_if_addrs()
     interfaces = psutil.net_if_stats()
@@ -61,8 +60,8 @@ def get_network_interfaces():
             print(f"  Status: {'Up' if interfaces[interface].isup else 'Down'}, Speed: {interfaces[interface].speed} Mbps")
 
 
-# Ping test function to check network latency
-def ping_test(host="8.8.8.8"): #google 
+# Testing the network latency
+def ping_test(host="8.8.8.8"): #By default ive given the google id 
     print(f"Pinging {host}...")
 
     # Cross-platform ping command
@@ -79,9 +78,9 @@ def ping_test(host="8.8.8.8"): #google
         print(f"Error executing ping: {e}")
 
 
-# Real-time Bandwidth Usage Graph using matplotlib
+# Bandwidth usage graph
 def real_time_bandwidth(interval=1, duration=60):
-    plt.ion()  # Interactive mode on
+    plt.ion()  
     fig, ax = plt.subplots()
     x_data, y_data = [], []
     start_time = time.time()
@@ -90,7 +89,6 @@ def real_time_bandwidth(interval=1, duration=60):
         bytes_sent, bytes_recv = get_network_usage()
         bandwidth_usage = (bytes_sent + bytes_recv) / 1_000_000  # Convert to MB
 
-        # Update graph data
         x_data.append(time.time() - start_time)
         y_data.append(bandwidth_usage)
 
@@ -103,10 +101,10 @@ def real_time_bandwidth(interval=1, duration=60):
         plt.draw()
         plt.pause(interval)
     
-    plt.ioff()  # Turn interactive mode off
+    plt.ioff()  
     plt.show()
 
-# Function to ask the user if they want to continue
+
 def continue_prompt():
     while True:
         choice = input("Do you want to continue? (yes/no): ").strip().lower()
@@ -117,7 +115,7 @@ def continue_prompt():
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
 
-# Main function for user interaction
+
 def main():
     while True:
         print("\nNetwork Monitoring Tool")
@@ -159,12 +157,12 @@ def main():
         else:
             print("Invalid choice")
 
-        # Ask user if they want to continue
+        
         if not continue_prompt():
             print("Exiting the program.")
             break
 
-    # Pause before exiting
+    
     input("Press Enter to exit...")
 
 if __name__ == "__main__":
